@@ -1,35 +1,67 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { CREATE_USER } from 'containers/App/constants';
+import { push } from 'connected-react-router'
+
+import { CREATE_USER, LOGIN_USER } from 'containers/App/constants';
+import { ALREADY_LOGGED_IN } from './constants';
 
 import { requestAPI } from 'utils/request';
+import { setJWT } from 'utils/authorization';
 
-import { makeSelectName, makeSelectEmail, makeSelectPassword } from 'containers/HomePage/selectors';
-import { userCreated, userCreatedError } from '../App/actions';
+import { makeSelectRegisterForm, makeSelectLoginForm } from 'containers/HomePage/selectors';
+import { userCreated, userCreatedError, userLoggedIn, userLoggedInError } from '../App/actions';
 
 
 export function* createUser() {
-  const name = yield select(makeSelectName());
-  const email = yield select(makeSelectEmail());
-  const password = yield select(makeSelectPassword());
+  const registerForm = yield select(makeSelectRegisterForm());
+
+  let response;
 
   try {
-    const user = yield call(requestAPI, '/auth/register', {
-      body: {name, email, password},
+    response = yield call(requestAPI, '/auth/register', {
+      body: registerForm,
       method: 'POST',
     });
-    
-    yield put(userCreated(user));
   } catch (err) {
+    console.log(err);
     yield put(userCreatedError(err));
+    return;
   }
+
+  setJWT(response);
+  
+  yield put(userCreated(response.user));
+  //yield put(push('/dashboard'));
 }
 
-/**
- * Root saga manages watcher lifecycle
- */
-export default function* userManagement() {
-  // By using `takeLatest` only the result of the latest API call is applied.
-  // It returns task descriptor (just like fork) so we can continue execution
-  // It will be cancelled automatically on component unmount
+export function* loginUser() {
+  const loginForm = yield select(makeSelectLoginForm());
+
+  let response;
+
+  try {
+    response = yield call(requestAPI, '/auth/login', {
+      body: loginForm,
+      method: 'POST',
+    });
+  } catch (err) {
+    console.log(err);
+    yield put(userLoggedInError(err));
+    return;
+  }
+
+  setJWT(response);
+
+  yield put(userLoggedIn(response.user));
+  //yield put(push('/dashboard'));
+}
+
+// Triggered if on / with logged in user
+export function* alreadyLoggedIn() {
+  yield put(push('/dashboard'));
+}
+
+export default function* sagas() {
   yield takeLatest(CREATE_USER, createUser);
+  yield takeLatest(LOGIN_USER, loginUser);
+  yield takeLatest(ALREADY_LOGGED_IN, alreadyLoggedIn);
 }

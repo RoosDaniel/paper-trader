@@ -10,10 +10,10 @@ const ROLES = require('../constants').ROLES;
 */
 const standardizeUser = user => ({
   id: _.get(user, '_id') || '',
-  firstName: _.get(user, 'name.first') || '',
-  lastName: _.get(user, 'name.last') || '',
+  name: _.get(user, 'name') || '',
   email: _.get(user, 'email') || '',
   role: _.get(user, 'role') || '',
+  sessions: _.get(user, 'sessions') || '',
 });
 
 /**

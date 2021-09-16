@@ -15,27 +15,21 @@
  *    }
  */
 
-import { CREATE_USER, CREATE_USER_SUCCESS, CREATE_USER_ERROR } from './constants';
+import {
+  CREATE_USER, CREATE_USER_SUCCESS, CREATE_USER_ERROR,
+  LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR,
+  FETCH_USER, FETCH_USER_SUCCESS,
+  INVALID_JWT,
+} from './constants';
 
-/**
- * Load the repositories, this action starts the request saga
- *
- * @return {object} An action object with a type of LOAD_REPOS
- */
+
+// User creation
 export function createUser() {
   return {
     type: CREATE_USER,
   };
 }
 
-/**
- * Dispatched when the repositories are loaded by the request saga
- *
- * @param  {array} repos The repository data
- * @param  {string} username The current username
- *
- * @return {object}      An action object with a type of LOAD_REPOS_SUCCESS passing the repos
- */
 export function userCreated(user) {
   return {
     type: CREATE_USER_SUCCESS,
@@ -43,16 +37,39 @@ export function userCreated(user) {
   };
 }
 
-/**
- * Dispatched when loading the repositories fails
- *
- * @param  {object} error The error
- *
- * @return {object}       An action object with a type of LOAD_REPOS_ERROR passing the error
- */
 export function userCreatedError(error) {
   return {
     type: CREATE_USER_ERROR,
     error,
   };
 }
+
+// User login
+export const loginUser = () => ({
+  type: LOGIN_USER,
+});
+
+export const userLoggedIn = user => ({
+  type: LOGIN_USER_SUCCESS,
+  user,
+});
+
+export const userLoggedInError = error => ({
+  type: LOGIN_USER_ERROR,
+  error,
+});
+
+// User fetching
+export const fetchUser = () => ({
+  type: FETCH_USER,
+});
+
+export const userFetched = user => ({
+  type: FETCH_USER_SUCCESS,
+  user
+});
+
+// Authorization
+export const invalidJWT = () => ({
+  type: INVALID_JWT,
+});

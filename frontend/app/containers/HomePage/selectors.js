@@ -5,24 +5,16 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectHome = state => state.home || initialState;
+export const selectHome = state => state.home || initialState;
 
-const makeSelectName = () =>
+export const makeSelectRegisterForm = () =>
   createSelector(
     selectHome,
-    homeState => homeState.name,
+    homeState => homeState.registerForm,
   );
 
-const makeSelectEmail = () => 
-    createSelector(
-      selectHome,
-      homeState => homeState.email,
+export const makeSelectLoginForm = () => 
+  createSelector(
+    selectHome,
+    homeState => homeState.loginForm,
   );
-
-const makeSelectPassword = () => 
-    createSelector(
-      selectHome,
-      homeState => homeState.password,
-  );
-
-export { selectHome, makeSelectName, makeSelectEmail, makeSelectPassword };

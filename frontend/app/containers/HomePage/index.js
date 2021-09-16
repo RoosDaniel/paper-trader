@@ -20,29 +20,40 @@ import {
 import H2 from 'components/H2';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
-import Input from './Input';
+import Input from 'components/Input';
 import Submit from './Submit';
-import { createUser } from '../App/actions';
-import { changeName, changeEmail, changePassword } from './actions';
-import { makeSelectName, makeSelectEmail, makeSelectPassword } from './selectors';
+import { createUser, loginUser } from '../App/actions';
+import { makeSelectUser } from '../App/selectors';
+import { changeRegisterFormValue, changeLoginFormValue, alreadyLoggedIn } from './actions';
+import { makeSelectRegisterForm, makeSelectLoginForm } from './selectors';
+
 import reducer from './reducer';
 import saga from './saga';
 
 const key = 'home';
 
 export function HomePage({
-  name,
-  email,
-  password,
+  user,
+
+  registerForm,
+  onRegsiterFormChange,
+  onSubmitRegister,
+
+  loginForm,
+  onLoginFormChange,
+  onSubmitLogin,
+
+  alreadyLoggedIn,
+
   loading,
   error,
-  onSubmitForm,
-  onChangeName,
-  onChangeEmail,
-  onChangePassword,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    user && alreadyLoggedIn();
+  }, [user]);
 
   return (
     <article>
@@ -61,38 +72,66 @@ export function HomePage({
           <p>
             Start by creating a user profile
           </p>
-          <Form onSubmit={onSubmitForm}>
-            <label htmlFor="name">
+          <Form onSubmit={onSubmitRegister}>
+            <label htmlFor="register-name">
               Name
               <Input
-                id="name"
+                id="register-name"
                 type="text"
-                value={name}
-                onChange={onChangeName}
+                value={registerForm.name}
+                onChange={evt => onRegsiterFormChange('name', evt.target.value)}
               />
             </label>
             <label htmlFor="email">
               Email
               <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={onChangeEmail}
+                id="register-email"
+                type="register-email"
+                value={registerForm.email}
+                onChange={evt => onRegsiterFormChange('email', evt.target.value)}
               />
             </label>
-            <label htmlFor="password">
+            <label htmlFor="pregister-assword">
               Password
               <Input
-                id="password"
+                id="register-password"
                 type="password"
-                value={password}
-                onChange={onChangePassword}
+                value={registerForm.password}
+                onChange={evt => onRegsiterFormChange('password', evt.target.value)}
               />
             </label>
             <Submit
-              id="submit"
+              id="register-submit"
               type="submit"
-              value="Submit"
+              value="Register"
+            />
+          </Form>
+          <p>
+            ... or log in to an existing account
+          </p>
+          <Form onSubmit={onSubmitLogin}>
+            <label htmlFor="login-email">
+              Email
+              <Input
+                id="login-email"
+                type="email"
+                value={loginForm.email}
+                onChange={evt => onLoginFormChange('email', evt.target.value)}
+              />
+            </label>
+            <label htmlFor="login-password">
+              Password
+              <Input
+                id="login-password"
+                type="password"
+                value={loginForm.password}
+                onChange={evt => onLoginFormChange('password', evt.target.value)}
+              />
+            </label>
+            <Submit
+              id="login-submit"
+              type="submit"
+              value="Login"
             />
           </Form>
         </CenteredSection>
@@ -102,22 +141,27 @@ export function HomePage({
 }
 
 HomePage.propTypes = {
+  user: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+
+  registerForm: PropTypes.object,
+  onRegsiterFormChange: PropTypes.func,
+  onSubmitRegister: PropTypes.func,
+
+  loginForm: PropTypes.object,
+  onLoginFormChange: PropTypes.func,
+  onSubmitLogin: PropTypes.func,
+
+  alreadyLoggedIn: PropTypes.func,
+
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  onSubmitForm: PropTypes.func,
-
-  name: PropTypes.string,
-  onChangeName: PropTypes.func,
-  email: PropTypes.string,
-  onChangeEmail: PropTypes.func,
-  password: PropTypes.string,
-  onChangePassword: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  name: makeSelectName(),
-  email: makeSelectEmail(),
-  password: makeSelectPassword(),
+  user: makeSelectUser(),
+
+  registerForm: makeSelectRegisterForm(),
+  loginForm: makeSelectLoginForm(),
 
   loading: makeSelectLoading(),
   error: makeSelectError(),
@@ -125,14 +169,19 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangeName: evt => dispatch(changeName(evt.target.value)),
-    onChangeEmail: evt => dispatch(changeEmail(evt.target.value)),
-    onChangePassword: evt => dispatch(changePassword(evt.target.value)),
-
-    onSubmitForm: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+    onRegsiterFormChange: (key, value) => dispatch(changeRegisterFormValue(key, value)),
+    onSubmitRegister: evt => {
+      evt && evt.preventDefault && evt.preventDefault();
       dispatch(createUser());
     },
+
+    onLoginFormChange: (key, value) => dispatch(changeLoginFormValue(key, value)),
+    onSubmitLogin: evt => {
+      evt && evt.preventDefault && evt.preventDefault();
+      dispatch(loginUser());
+    },
+
+    alreadyLoggedIn: () => dispatch(alreadyLoggedIn()),
   };
 }
 

@@ -1,3 +1,9 @@
+import store from '../store';
+
+import { invalidJWT } from 'containers/App/actions';
+import { getJWT } from 'utils/authorization';
+
+
 /**
  * Parses the JSON returned by a network request
  *
@@ -24,6 +30,10 @@ function checkStatus(response) {
     return response;
   }
 
+  if (response.status === 401) {
+    store.dispatch(invalidJWT());
+  }
+
   const error = new Error(response.statusText);
   error.response = response;
   throw error;
@@ -48,10 +58,16 @@ export function requestAPI(path, options) {
     options.body = JSON.stringify(options.body);
   }
 
-  console.log({options})
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+
+  if (window.localStorage.getItem("JWT")) {
+    headers["Authorization"] = getJWT();
+  }
 
   return request(`http://localhost:3000${path}`, {
-    headers: {'Content-Type': 'application/json'},
+    headers,
     ...options,
   });
 }

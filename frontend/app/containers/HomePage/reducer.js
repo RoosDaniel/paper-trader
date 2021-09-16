@@ -1,35 +1,29 @@
-/*
- * HomeReducer
- *
- * The reducer takes care of our data. Using actions, we can
- * update our application state. To add a new action,
- * add it to the switch statement in the reducer function
- *
- */
-
 import produce from 'immer';
-import { CHANGE_NAME, CHANGE_EMAIL, CHANGE_PASSWORD } from './constants';
+import { CHANGE_REGISTER_FORM, CHANGE_LOGIN_FORM } from './constants';
 
 export const initialState = {
-  name: '',
-  email: '',
-  password: '',
+  registerForm: {
+    name: '',
+    email: '',
+    password: '',
+  },
+  loginForm: {
+    email: '',
+    password: '',
+  }
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const homeReducer = (state = initialState, action) =>
+const reducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case CHANGE_NAME:
-        draft.name = action.name;
+      case CHANGE_REGISTER_FORM:
+        draft.registerForm[action.key] = action.value;
         break;
-      case CHANGE_EMAIL:
-        draft.email = action.email;
-        break;
-      case CHANGE_PASSWORD:
-        draft.password = action.password;
+      case CHANGE_LOGIN_FORM:
+        draft.loginForm[action.key] = action.value;
         break;
     }
   });
 
-export default homeReducer;
+export default reducer;

@@ -12,3 +12,13 @@
 export const CREATE_USER = 'papertrader/App/CREATE_USER';
 export const CREATE_USER_SUCCESS = 'papertrader/App/CREATE_USER_SUCCESS';
 export const CREATE_USER_ERROR = 'papertrader/App/CREATE_USER_ERROR';
+
+export const LOGIN_USER = 'papertrader/App/LOGIN_USER';
+export const LOGIN_USER_SUCCESS = 'papertrader/App/LOGIN_USER_SUCCESS';
+export const LOGIN_USER_ERROR = 'papertrader/App/LOGIN_USER_ERROR';
+
+export const FETCH_USER = 'papertrader/App/FETCH_USER';
+export const FETCH_USER_SUCCESS = 'papertrader/App/FETCH_USER_SUCCESS';
+export const FETCH_USER_ERROR = 'papertrader/App/FETCH_USER_ERROR';
+
+export const INVALID_JWT = 'papertrader/App/INVALID_JWT';

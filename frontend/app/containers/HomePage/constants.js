@@ -9,6 +9,7 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const CHANGE_NAME = 'papertrader/Home/CHANGE_NAME';
-export const CHANGE_EMAIL = 'papertrader/Home/CHANGE_EMAIL';
-export const CHANGE_PASSWORD = 'papertrader/Home/CHANGE_PASSWORD';
+export const CHANGE_REGISTER_FORM = 'papertrader/Home/CHANGE_REGISTER_FORM';
+export const CHANGE_LOGIN_FORM = 'papertrader/Home/CHANGE_LOGIN_FORM';
+
+export const ALREADY_LOGGED_IN = 'papertrader/Home/ALREADY_LOGGED_IN';

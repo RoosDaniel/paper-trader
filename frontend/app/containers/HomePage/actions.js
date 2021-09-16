@@ -15,32 +15,27 @@
  *    }
  */
 
-import { CHANGE_NAME, CHANGE_EMAIL, CHANGE_PASSWORD } from './constants';
+import { CHANGE_REGISTER_FORM, CHANGE_LOGIN_FORM, ALREADY_LOGGED_IN } from './constants';
 
-/**
- * Changes the input field of the form
- *
- * @param  {string} username The new text of the input field
- *
- * @return {object} An action object with a type of CHANGE_USERNAME
- */
-export function changeName(name) {
+
+export function changeRegisterFormValue(key, value) {
   return {
-    type: CHANGE_NAME,
-    name,
+    type: CHANGE_REGISTER_FORM,
+    key,
+    value,
   };
 }
 
-export function changeEmail(email) {
+export function changeLoginFormValue(key, value) {
   return {
-    type: CHANGE_EMAIL,
-    email,
+    type: CHANGE_LOGIN_FORM,
+    key,
+    value,
   };
 }
 
-export function changePassword(password) {
+export function alreadyLoggedIn() {
   return {
-    type: CHANGE_PASSWORD,
-    password,
+    type: ALREADY_LOGGED_IN,
   };
 }
