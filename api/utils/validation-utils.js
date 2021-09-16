@@ -42,7 +42,7 @@ const responseValidator = function responseValidator(req, fields) {
         }
       }
       if (fields[i].name === 'password') {
-        if (req.password && req.password.length < 8) {
+        if (req.password && req.password.length < 3) {
           errors.push({ error: ERRORS.PASSWORD_TOO_SHORT });
         }
       }
@@ -71,7 +71,6 @@ const filterSensitiveData = (req) => {
   const newBody = {};
   const sensitiveKeys = [
     'password',
-    'billing',
   ];
 
   Object.keys(req).forEach((item) => {

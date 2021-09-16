@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const ROLES = require('../constants').ROLES;
+const constats = require('../constants');
+
+const {
+  ROLES,
+  TRANSACTIONS
+} = constats;
 
 const Schema = mongoose.Schema;
 
@@ -16,8 +21,8 @@ const UserSchema = new Schema({
   },
   password: { type: String, required: true },
   name: {
-    first: { type: String, required: true },
-    last: { type: String, required: true },
+    type: String,
+    required: true,
   },
   role: {
     type: String,
@@ -26,13 +31,20 @@ const UserSchema = new Schema({
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
-  billing: {
-    customerId: { type: String },
-    subscriptionId: { type: String },
-    plan: { type: String },
-    nextPaymentDue: { type: Date },
-  },
   deactivated: { type: Boolean, default: false },
+  sessions: [{
+    wallet: Number,
+    transactions: [{
+      stock: String,
+      price: Number,
+      volume: Number,
+      kind: {
+          type: String,
+          enum: Object.keys(TRANSACTIONS).map(key => TRANSACTIONS[key]),
+          required: true,
+      }
+    }],
+  }],
 },
 {
   timestamps: true,
@@ -42,10 +54,6 @@ const UserSchema = new Schema({
   toJSON: {
     virtuals: true,
   },
-});
-
-UserSchema.virtual('fullName').get(function virtualFullName() {
-  return `${this.name.first} ${this.name.last}`;
 });
 
 //= ===============================

@@ -43,7 +43,8 @@ exports.jwtAuth = (ctx, next) => passport.authenticate('jwt', async (err, payloa
     ctx.body = { errors: { error: ERRORS.JWT_EXPIRED }, jwtExpired: true };
   } else {
     // Add user to state
-    ctx.state.user = payload;
+    ctx.state.userAuth = payload;
+    ctx.state.user = await User.findById(payload.id);
     await next();
   }
 })(ctx, next);

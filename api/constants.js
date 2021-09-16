@@ -19,4 +19,8 @@ module.exports = {
     PASSWORD_TOO_SHORT: 'Your password must be at least eight characters long.',
     USER_NOT_FOUND: 'No user was found.',
   },
+  TRANSACTIONS: {
+    PURCHASE: "purchase",
+    SALE: "sale",
+  }
 };
