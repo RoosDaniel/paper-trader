@@ -30,7 +30,6 @@ export function* createUser() {
   setJWT(response);
   
   yield put(userCreated(response.user));
-  //yield put(push('/dashboard'));
 }
 
 export function* loginUser() {
@@ -52,7 +51,6 @@ export function* loginUser() {
   setJWT(response);
 
   yield put(userLoggedIn(response.user));
-  //yield put(push('/dashboard'));
 }
 
 // Triggered if on / with logged in user

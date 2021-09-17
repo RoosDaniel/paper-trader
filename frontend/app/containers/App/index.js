@@ -20,10 +20,10 @@ import { useInjectSaga } from 'utils/injectSaga';
 import saga from './saga';
 import { fetchUser } from './actions';
 
-import HomePage from 'containers/HomePage/index';
-import DashboardPage from 'containers/DashboardPage/index';
+import HomePage from 'containers/HomePage';
+import DashboardPage from 'containers/DashboardPage';
+import NotFoundPage from 'containers/NotFoundPage';
 
-import NotFoundPage from 'containers/NotFoundPage/index';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 

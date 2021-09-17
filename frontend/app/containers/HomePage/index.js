@@ -13,19 +13,25 @@ import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
+
 import {
   makeSelectLoading,
   makeSelectError,
 } from 'containers/App/selectors';
+
 import H2 from 'components/H2';
-import CenteredSection from './CenteredSection';
-import Form from './Form';
 import Input from 'components/Input';
+import LoadingIndicator from 'components/LoadingIndicator';
+
+import CenteredSection from './CenteredSection';
 import Submit from './Submit';
-import { createUser, loginUser } from '../App/actions';
-import { makeSelectUser } from '../App/selectors';
+import Form from './Form';
+
 import { changeRegisterFormValue, changeLoginFormValue, alreadyLoggedIn } from './actions';
 import { makeSelectRegisterForm, makeSelectLoginForm } from './selectors';
+
+import { createUser, loginUser } from 'containers/App/actions';
+import { makeSelectUser } from 'containers/App/selectors';
 
 import reducer from './reducer';
 import saga from './saga';
@@ -54,6 +60,8 @@ export function HomePage({
   useEffect(() => {
     user && alreadyLoggedIn();
   }, [user]);
+
+  if (loading) return <LoadingIndicator />;
 
   return (
     <article>

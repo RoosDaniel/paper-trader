@@ -34,6 +34,9 @@ exports.createTransaction = async (ctx, next) => {
         const transaction = ctx.request.body;  // TODO Verify content + look up price externally
         const liquidity = transaction.price * transaction.volume;
 
+        // TODO Check liquidity against wallet
+        // TODO Date and time of transaction
+
         if (transaction.kind === TRANSACTIONS.PURCHASE) {
             session.wallet -= liquidity;
         } else if (transaction.kind === TRANSACTIONS.SALE) {

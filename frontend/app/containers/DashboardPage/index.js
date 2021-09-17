@@ -15,7 +15,12 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import { makeSelectUser } from 'containers/App/selectors';
 
+import LoadingIndicator from 'components/LoadingIndicator';
+
 import CenteredSection from './CenteredSection';
+import Session from './containers/Session';
+import SessionCollection from './SessionCollection';
+
 import H2 from 'components/H2';
 
 import reducer from './reducer';
@@ -24,10 +29,12 @@ import saga from './saga';
 const key = 'dashboard';
 
 export function DashboardPage({
-    user
+    user,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  if (!user) return <LoadingIndicator />;
 
   return (
     <article>
@@ -44,9 +51,12 @@ export function DashboardPage({
             Dashboard
           </H2>
           <p>
-            From here, you can view your created sessions and create new ones!
+            From here, you can view your created sessions and create new ones.
           </p>
           Welcome {user.name}!
+          <SessionCollection>
+            {user.sessions.map(session => <Session session={session} key={session._id}/>)}
+          </SessionCollection>
         </CenteredSection>
       </div>
     </article>

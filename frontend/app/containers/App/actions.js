@@ -19,7 +19,7 @@ import {
   CREATE_USER, CREATE_USER_SUCCESS, CREATE_USER_ERROR,
   LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR,
   FETCH_USER, FETCH_USER_SUCCESS,
-  INVALID_JWT,
+  INVALID_JWT, NOT_LOGGED_IN,
 } from './constants';
 
 
@@ -72,4 +72,8 @@ export const userFetched = user => ({
 // Authorization
 export const invalidJWT = () => ({
   type: INVALID_JWT,
+});
+
+export const notLoggedIn = () => ({
+  type: NOT_LOGGED_IN,
 });

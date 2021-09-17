@@ -22,3 +22,4 @@ export const FETCH_USER_SUCCESS = 'papertrader/App/FETCH_USER_SUCCESS';
 export const FETCH_USER_ERROR = 'papertrader/App/FETCH_USER_ERROR';
 
 export const INVALID_JWT = 'papertrader/App/INVALID_JWT';
+export const NOT_LOGGED_IN = 'papertrader/App/NOT_LOGGED_IN';
