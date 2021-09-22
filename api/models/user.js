@@ -34,10 +34,13 @@ const UserSchema = new Schema({
   deactivated: { type: Boolean, default: false },
   sessions: [{
     wallet: Number,
+    name: String,
+    creation: { type: Date, default: Date.now },
     transactions: [{
       stock: String,
       price: Number,
       volume: Number,
+      creation: { type: Date, default: Date.now },
       kind: {
           type: String,
           enum: Object.keys(TRANSACTIONS).map(key => TRANSACTIONS[key]),

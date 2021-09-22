@@ -53,7 +53,6 @@ export function DashboardPage({
           <p>
             From here, you can view your created sessions and create new ones.
           </p>
-          Welcome {user.name}!
           <SessionCollection>
             {user.sessions.map(session => <Session session={session} key={session._id}/>)}
           </SessionCollection>
