@@ -22,10 +22,9 @@ import {
 import H2 from 'components/H2';
 import Input from 'components/Input';
 import LoadingIndicator from 'components/LoadingIndicator';
-
-import CenteredSection from './CenteredSection';
-import Submit from './Submit';
-import Form from './Form';
+import CenteredSection from 'components/CenteredSection';
+import Form from 'components/Form';
+import Submit from 'components/Submit';
 
 import { changeRegisterFormValue, changeLoginFormValue, alreadyLoggedIn } from './actions';
 import { makeSelectRegisterForm, makeSelectLoginForm } from './selectors';
@@ -99,7 +98,7 @@ export function HomePage({
                 onChange={evt => onRegsiterFormChange('email', evt.target.value)}
               />
             </label>
-            <label htmlFor="pregister-assword">
+            <label htmlFor="register-password">
               Password
               <Input
                 id="register-password"

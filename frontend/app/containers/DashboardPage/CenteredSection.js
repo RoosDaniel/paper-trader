@@ -1,6 +1,11 @@
 import styled from 'styled-components';
-import Section from './Section';
 
-export default styled(Section)`
+export default styled.section`
+  margin: 3em auto;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
   text-align: center;
 `;

@@ -6,4 +6,6 @@ export default styled.section`
   &:first-child {
     margin-top: 0;
   }
+
+  text-align: center;
 `;

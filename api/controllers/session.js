@@ -6,7 +6,6 @@ exports.createSession = async (ctx, next) => {
 
         const session = {
             ...ctx.request.body,
-            wallet: 100,  // TODO Make dynamic
             transactions: [],
         };
         
