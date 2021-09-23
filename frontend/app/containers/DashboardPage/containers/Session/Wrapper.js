@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+export default styled.div`
   text-align: center;
   box-shadow: 0px 2px 6px -1px black;
   width: 200px;
@@ -9,5 +9,3 @@ const Wrapper = styled.div`
 
   display: inline-block;
 `;
-
-export default Wrapper;

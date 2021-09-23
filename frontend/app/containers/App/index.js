@@ -13,12 +13,11 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from './saga';
-import { fetchUser } from './actions';
+import { fetchUser, logOut } from './actions';
 
 import HomePage from 'containers/HomePage';
 import DashboardPage from 'containers/DashboardPage';
@@ -29,27 +28,19 @@ import Footer from 'components/Footer';
 
 import GlobalStyle from '../../global-styles';
 
-const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
-`;
+import AppWrapper from './AppWrapper';
 
 const key = 'global';
 
 export function App({
-  onPageLoad,
+  onJWTFound,
+  onJWTNotFound,
 }) {
   useInjectSaga({ key, saga });
 
   useEffect(() => {
-    if ("JWT" in window.localStorage) {
-      onPageLoad();
-    }
-  }, [])
+    "JWT" in window.localStorage ? onJWTFound() : onJWTNotFound();
+  }, []);
 
   return (
     <AppWrapper>
@@ -59,7 +50,7 @@ export function App({
       >
         <meta name="description" content="A papertrader" />
       </Helmet>
-      {/*<Header />*/}
+      <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/dashboard" component={DashboardPage} />
@@ -72,14 +63,16 @@ export function App({
 }
 
 App.propTypes = {
-  onPageLoad: PropTypes.func,
+  onJWTFound: PropTypes.func,
+  onJWTNotFound: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({});
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onPageLoad: () => dispatch(fetchUser()),
+    onJWTFound: () => dispatch(fetchUser()),
+    onJWTNotFound: () => dispatch(logOut()),
   };
 }
 

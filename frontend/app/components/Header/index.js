@@ -1,18 +1,52 @@
-import React from 'react';
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 
-import NavBar from './NavBar';
-import HeaderLink from './HeaderLink';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
-function Header() {
+import { makeSelectUser } from 'containers/App/selectors';
+import { logOut } from 'containers/App/actions';
+
+import Wrapper from './Wrapper';
+
+function Header({
+  user,
+  onLogOut,
+}) {
   return (
-    <div>
-      <NavBar>
-        <HeaderLink to="/">
-          Dashboard
-        </HeaderLink>
-      </NavBar>
-    </div>
-  );
+    <Wrapper>
+      {user ? (
+      <div>{ user.name }, <a href="#" onClick={onLogOut}>log out</a></div>
+      ) : null}
+    </Wrapper>
+  )
 }
 
-export default Header;
+Header.propTypes = {
+  user: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  onLogOut: PropTypes.func,
+};
+
+const mapStateToProps = createStructuredSelector({
+  user: makeSelectUser(),
+});
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onLogOut: e => {
+      dispatch(logOut());
+      e.preventDefault();
+    }
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(Header);

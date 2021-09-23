@@ -21,5 +21,8 @@ export const FETCH_USER = 'papertrader/App/FETCH_USER';
 export const FETCH_USER_SUCCESS = 'papertrader/App/FETCH_USER_SUCCESS';
 export const FETCH_USER_ERROR = 'papertrader/App/FETCH_USER_ERROR';
 
+export const REMOVE_USER = 'papertrader/App/REMOVE_USER';
+
 export const INVALID_JWT = 'papertrader/App/INVALID_JWT';
 export const NOT_LOGGED_IN = 'papertrader/App/NOT_LOGGED_IN';
+export const LOG_OUT = 'papertrader/App/LOG_OUT';

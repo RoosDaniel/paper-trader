@@ -11,7 +11,7 @@ import produce from 'immer';
 import {
   CREATE_USER, CREATE_USER_SUCCESS, CREATE_USER_ERROR,
   LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR,
-  FETCH_USER_SUCCESS,
+  FETCH_USER_SUCCESS, REMOVE_USER,
 } from './constants';
 
 // The initial state of the App
@@ -46,6 +46,10 @@ const appReducer = (state = initialState, action) =>
 
       case FETCH_USER_SUCCESS:
         draft.user = action.user;
+        break;
+      
+      case REMOVE_USER:
+        draft.user = false;
         break;
     }
   });

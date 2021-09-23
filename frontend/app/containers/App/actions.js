@@ -19,7 +19,8 @@ import {
   CREATE_USER, CREATE_USER_SUCCESS, CREATE_USER_ERROR,
   LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR,
   FETCH_USER, FETCH_USER_SUCCESS,
-  INVALID_JWT, NOT_LOGGED_IN,
+  REMOVE_USER,
+  INVALID_JWT, NOT_LOGGED_IN, LOG_OUT,
 } from './constants';
 
 
@@ -69,6 +70,10 @@ export const userFetched = user => ({
   user
 });
 
+export const removeUser = () => ({
+  type: REMOVE_USER,
+});
+
 // Authorization
 export const invalidJWT = () => ({
   type: INVALID_JWT,
@@ -77,3 +82,7 @@ export const invalidJWT = () => ({
 export const notLoggedIn = () => ({
   type: NOT_LOGGED_IN,
 });
+
+export const logOut = () => ({
+  type: LOG_OUT,
+})
