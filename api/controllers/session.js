@@ -20,6 +20,24 @@ exports.createSession = async (ctx, next) => {
     }
 }
 
+exports.getSession = async (ctx, next) => {
+    try {
+        const { user } = ctx.state;
+        const session = user.sessions.find(session => session._id == ctx.params.id);
+
+        if (!session) {
+            ctx.status = 404
+            ctx.body = {errors: ["Session not found"]};
+            await next();
+        }
+
+        ctx.body = { session };
+        await next();
+    } catch (err) {
+        ctx.throw(500, err);
+    }
+}
+
 exports.createTransaction = async (ctx, next) => {
     try {
         const { user } = ctx.state;

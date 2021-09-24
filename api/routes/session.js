@@ -9,12 +9,14 @@ const {
 
 const {
   createSession,
+  getSession,
   createTransaction,
 } = sessionControllers;
 
 const router = new Router({ prefix: '/session' });
 
 router.post('/', jwtAuth, createSession);
+router.get('/:id', jwtAuth, getSession);
 router.post('/:id/transactions', jwtAuth, createTransaction);
 
 module.exports = router;

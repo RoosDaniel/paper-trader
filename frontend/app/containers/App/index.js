@@ -22,6 +22,7 @@ import { fetchUser, logOut } from './actions';
 import HomePage from 'containers/HomePage';
 import DashboardPage from 'containers/DashboardPage';
 import CreateSessionPage from 'containers/CreateSessionPage';
+import SessionPage from 'containers/SessionPage';
 import NotFoundPage from 'containers/NotFoundPage';
 
 import Header from 'components/Header';
@@ -56,6 +57,7 @@ export function App({
         <Route exact path="/" component={HomePage} />
         <Route exact path="/dashboard" component={DashboardPage} />
         <Route exact path="/create_session" component={CreateSessionPage} />
+        <Route exact path="/session/:id" component={SessionPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />

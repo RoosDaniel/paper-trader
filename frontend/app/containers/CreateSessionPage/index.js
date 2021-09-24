@@ -1,9 +1,3 @@
-/*
- * DashboardPage
- *
- * This is the logged in "homepage"
- */
-
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
@@ -26,7 +20,6 @@ import Submit from 'components/Submit';
 
 import reducer from './reducer';
 import saga from './saga';
-import { create } from 'lodash';
 
 const key = 'createSession';
 
